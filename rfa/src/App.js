@@ -7,7 +7,7 @@ class App extends Component {
     emotiontext: "",
     checked: true,
     image: null,
-
+    result: "",
   };
 
   handleCheckChange = (e) => {
@@ -51,7 +51,7 @@ class App extends Component {
       await axios
         .get(url)
         .then(res => console.log(res.data))
-        .catch(err => console.log(err))}
+        .catch(err => this.setState({result: "error"}))}
     Result();
   };
 
@@ -82,6 +82,7 @@ class App extends Component {
         <button onClick={this.handleResult}>
           Get the result
         </button>
+        <p>{this.state.result}</p>
       </div>
     );
   }
