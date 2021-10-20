@@ -1,3 +1,4 @@
+import re
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
@@ -9,6 +10,8 @@ CORS(app)
 @app.route("/api/posts",methods=['POST'])
 def uploadImage():
     image = request.files['image']
+    willingness = request.files['willingness']
+    emotiontext = request.files['emotion']
     dictToSend = {'result':True}
     print("posts posted")
     res = requests.post('http://localhost:5000/api/results', json=dictToSend)

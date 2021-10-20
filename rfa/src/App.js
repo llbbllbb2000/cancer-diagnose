@@ -4,7 +4,16 @@ import axios from 'axios';
 class App extends Component {
 
   state = {
-    image: null
+    emotiontext: "",
+    checked: true,
+    image: null,
+
+  };
+
+  handleCheckChange = (e) => {
+    this.setState({
+      checked: !this.state.checked
+    })
   };
 
   handleImageChange = (e) => {
@@ -13,11 +22,19 @@ class App extends Component {
     })
   };
 
+  handleTextChange = (e) => {
+    this.setState({
+      emotiontext: e.target.value
+    })
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     console.log(this.state);
     let form_data = new FormData();
     form_data.append('image', this.state.image, this.state.image.name);
+    form_data.append('willingness', this.state.checked);
+    form_data.append('emotion', this.state.emotiontext);
     let url = 'http://localhost:5000/api/posts';
     const Upload = async() => {
       await axios
@@ -29,13 +46,14 @@ class App extends Component {
 
   handleResult = (e) => {
     e.preventDefault();
+    let url = 'http://localhost:5000/api/results';
     const Result = async() => {
       await axios
-        .get('http://localhost:5000/api/results')
+        .get(url)
         .then(res => console.log(res.data))
         .catch(err => console.log(err))}
-    Result()
-  }  
+    Result();
+  };
 
   render() {
     return (
@@ -46,10 +64,23 @@ class App extends Component {
                    id="image"
                    accept="image/png, image/jpeg"  onChange={this.handleImageChange} required/>
           </p>
+          <p>
+          Please Describe your current situation
+            <p>
+              <textarea rows = "20" onChange={this.handleTextChange}></textarea>
+            </p>
+          </p>
+          <p>
+            <input
+              type="checkbox"
+              checked={this.state.checked}
+              onChange={this.handleCheckChange}/>
+              I am willing to share my personal data.
+          </p>
           <input type="submit"/>
         </form>
         <button onClick={this.handleResult}>
-          Say Hello
+          Get the result
         </button>
       </div>
     );
