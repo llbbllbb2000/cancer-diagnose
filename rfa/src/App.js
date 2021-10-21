@@ -33,14 +33,17 @@ class App extends Component {
     console.log(this.state);
     let form_data = new FormData();
     form_data.append('image', this.state.image, this.state.image.name);
-    form_data.append('willingness', this.state.checked);
     form_data.append('emotion', this.state.emotiontext);
     let url = 'http://localhost:5000/api/posts';
     const Upload = async() => {
       await axios
-        .post(url, form_data)
-        .then(res => console.log("res.data"))
-        .catch(err => console.log(err))}
+        .post(url, form_data, {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        })
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err.data))}
     Upload();
   };
 
@@ -64,12 +67,10 @@ class App extends Component {
                    id="image"
                    accept="image/png, image/jpeg"  onChange={this.handleImageChange} required/>
           </p>
-          <p>
           Please Describe your current situation
             <p>
               <textarea rows = "20" onChange={this.handleTextChange}></textarea>
             </p>
-          </p>
           <p>
             <input
               type="checkbox"
