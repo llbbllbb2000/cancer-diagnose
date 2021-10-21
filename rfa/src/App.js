@@ -59,9 +59,11 @@ class App extends Component {
     Result();
   };
 
-  play() {
+  play = (e) => {
+    e.preventDefault();
     let audio = new Audio('http://localhost:5000/test.mp3');
     audio.play();
+    audio = null;
   }
 
   render() {
@@ -90,7 +92,7 @@ class App extends Component {
           Get the result
         </button>
         <p>{this.state.result}</p>
-        <button onClick={this.play}>Play</button>
+        <button onClick={this.play.bind(this)}>Play</button>
       </div>
     );
   }
