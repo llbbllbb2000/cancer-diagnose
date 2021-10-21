@@ -7,7 +7,7 @@ class App extends Component {
     emotiontext: "",
     checked: true,
     image: null,
-    result: "",
+    result: ""
   };
 
   handleCheckChange = (e) => {
@@ -54,10 +54,15 @@ class App extends Component {
     const Result = async() => {
       await axios
         .get(url)
-        .then(res => console.log(res.data))
+        .then(res => this.setState({result: res.data}))
         .catch(err => this.setState({result: "error"}))}
     Result();
   };
+
+  play() {
+    let audio = new Audio('http://localhost:5000/test.mp3');
+    audio.play();
+  }
 
   render() {
     return (
@@ -66,7 +71,7 @@ class App extends Component {
           <p>
             <input type="file"
                    id="image"
-                   accept="image/png, image/jpeg"  onChange={this.handleImageChange} required/>
+                   accept="image/png, image/jpeg, image/tif, image/tiff, .tif"  onChange={this.handleImageChange} required/>
           </p>
           Please Describe your current situation
             <p>
@@ -85,6 +90,7 @@ class App extends Component {
           Get the result
         </button>
         <p>{this.state.result}</p>
+        <button onClick={this.play}>Play</button>
       </div>
     );
   }

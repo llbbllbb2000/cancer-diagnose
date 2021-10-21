@@ -1,7 +1,5 @@
-import tensorflow as tf
-from tensorflow.keras.models import Sequential, load_model
+from tensorflow.keras.models import load_model
 
-import matplotlib.image as mpig
 import numpy as np
 from PIL import Image
 
@@ -12,4 +10,4 @@ def predict(file_image):
     img = np.array(resized_image)
 
     # 1：cancer   0:no cancer
-    return np.round(model.predict(img[np.newaxis,:]))
+    return int(np.round(model.predict(img[np.newaxis,:]))[0][0])
