@@ -33,6 +33,7 @@ class App extends Component {
     console.log(this.state);
     let form_data = new FormData();
     form_data.append('image', this.state.image, this.state.image.name);
+    form_data.append('will', this.state.checked);
     form_data.append('emotion', this.state.emotiontext);
     let url = 'http://localhost:5000/api/posts';
     const Upload = async() => {
