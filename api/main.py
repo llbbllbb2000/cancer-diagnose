@@ -12,17 +12,17 @@ tex = 'I need an image for diagnosing'
 
 gTTS(text=tex,lang='en').save("test.mp3")
 
-@app.route("/api/posts", methods=['POST'])
+@app.route("/images", methods=['POST'])
 def uploadImage():
     image = request.files['image']
     will = request.values['will']
     emotiontext = request.values['emotion']
     result = predict(image, will)
     dictToSend = {'result': result}
-    requests.post('http://localhost:5000/api/results', json=dictToSend)
+    requests.post('http://localhost:5000/results', json=dictToSend)
     return " "
 
-@app.route("/api/results", methods=['POST','GET'])
+@app.route("/results", methods=['POST','GET'])
 def Result():
     global whetherCancer, tex
     if request.method == 'POST':

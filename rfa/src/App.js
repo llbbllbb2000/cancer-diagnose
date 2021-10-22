@@ -35,7 +35,7 @@ class App extends Component {
     form_data.append('image', this.state.image, this.state.image.name);
     form_data.append('will', this.state.checked);
     form_data.append('emotion', this.state.emotiontext);
-    let url = 'http://localhost:5000/api/posts';
+    let url = 'http://localhost:5000/images';
     const Upload = async() => {
       await axios
         .post(url, form_data, {
@@ -50,7 +50,7 @@ class App extends Component {
 
   handleResult = (e) => {
     e.preventDefault();
-    let url = 'http://localhost:5000/api/results';
+    let url = 'http://localhost:5000/results';
     const Result = async() => {
       await axios
         .get(url)
