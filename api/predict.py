@@ -1,5 +1,6 @@
 from tensorflow.keras.models import load_model
 import tensorflow as tf
+import tensorflow_hub as hub
 import tensorflow_text as text
 import numpy as np
 from PIL import Image
@@ -15,6 +16,6 @@ def predict(file_image, will):
     return int(np.round(model.predict(img[np.newaxis,:]))[0][0])
 
 def predict_bert(s):
-    model = lode_model("BERT.h5")
+    model = load_model("BERT.h5", custom_objects={'KerasLayer':hub.KerasLayer}, compile=False)
     res = tf.sigmoid(model.predict([s]))
     return res >= 0.5
