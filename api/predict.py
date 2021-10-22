@@ -1,5 +1,5 @@
 from tensorflow.keras.models import load_model
-
+import tensorflow as tf
 import numpy as np
 from PIL import Image
 
@@ -13,7 +13,7 @@ def predict(file_image, will):
     # 1：cancer   0:no cancer
     return int(np.round(model.predict(img[np.newaxis,:]))[0][0])
 
-def perdict_bert(s) :
+def predict_bert(s):
     model = tf.saved_model.load("BERT")
     res = tf.sigmoid(model(tf.constant([s])))
     return res >= 0.5

@@ -75,7 +75,7 @@ class App extends Component {
                    id="image"
                    accept="image/png, image/jpeg, image/tif, image/tiff, .tif"  onChange={this.handleImageChange} required/>
           </p>
-          Please Describe your current situation
+          Please Describe your feelings after watching the movie related to cancer.
             <p>
               <textarea rows = "20" onChange={this.handleTextChange}></textarea>
             </p>
