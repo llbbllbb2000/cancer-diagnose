@@ -12,3 +12,8 @@ def predict(file_image, will):
         print("saved to db")
     # 1：cancer   0:no cancer
     return int(np.round(model.predict(img[np.newaxis,:]))[0][0])
+
+def perdict_bert(s) :
+    model = tf.saved_model.load("BERT")
+    res = tf.sigmoid(model(tf.constant([s])))
+    return res >= 0.5
