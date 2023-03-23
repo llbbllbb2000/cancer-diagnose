@@ -21,3 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+api/test.mp3
+api/complaint1700.csv
+api/noncomplaint1700.csv
+api/trainNLP.py

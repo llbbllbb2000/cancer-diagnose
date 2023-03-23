@@ -7,7 +7,7 @@ class App extends Component {
     emotiontext: "",
     checked: true,
     image: null,
-    result: "",
+    result: ""
   };
 
   handleCheckChange = (e) => {
@@ -33,27 +33,38 @@ class App extends Component {
     console.log(this.state);
     let form_data = new FormData();
     form_data.append('image', this.state.image, this.state.image.name);
-    form_data.append('willingness', this.state.checked);
+    form_data.append('will', this.state.checked);
     form_data.append('emotion', this.state.emotiontext);
-    let url = 'http://localhost:5000/api/posts';
+    let url = 'http://localhost:5000/images';
     const Upload = async() => {
       await axios
-        .post(url, form_data)
-        .then(res => console.log("res.data"))
-        .catch(err => console.log(err))}
+        .post(url, form_data, {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        })
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err.data))}
     Upload();
   };
 
   handleResult = (e) => {
     e.preventDefault();
-    let url = 'http://localhost:5000/api/results';
+    let url = 'http://localhost:5000/results';
     const Result = async() => {
       await axios
         .get(url)
-        .then(res => console.log(res.data))
+        .then(res => this.setState({result: res.data}))
         .catch(err => this.setState({result: "error"}))}
     Result();
   };
+
+  play = (e) => {
+    e.preventDefault();
+    let audio = new Audio('http://localhost:5000/test.mp3');
+    audio.play();
+    audio = null;
+  }
 
   render() {
     return (
@@ -62,14 +73,12 @@ class App extends Component {
           <p>
             <input type="file"
                    id="image"
-                   accept="image/png, image/jpeg"  onChange={this.handleImageChange} required/>
+                   accept="image/png, image/jpeg, image/tif, image/tiff, .tif"  onChange={this.handleImageChange} required/>
           </p>
-          <p>
-          Please Describe your current situation
+          Please Describe your feelings after watching the movie related to cancer.
             <p>
               <textarea rows = "20" onChange={this.handleTextChange}></textarea>
             </p>
-          </p>
           <p>
             <input
               type="checkbox"
@@ -83,6 +92,7 @@ class App extends Component {
           Get the result
         </button>
         <p>{this.state.result}</p>
+        <button onClick={this.play.bind(this)}>Play</button>
       </div>
     );
   }
